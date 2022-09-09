@@ -1,0 +1,17 @@
+{
+  "name": "cta-rider",
+  "version": "1.0.0",
+  "description": "Solution to the CTA Rider problem for the Nickels Coding Challenge.",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dan Tinsman",
+  "license": "ISC",
+  "bin": {
+    "hello": "./bin/index.js"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
