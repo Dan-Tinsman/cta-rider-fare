@@ -6,7 +6,7 @@ for the Nickels Code Challenge.
 
 1. Install the latest stable version of node installed: https://nodejs.org/en/
 2. Clone this repository
-3. navigate to the /cta-rider directory
+3. navigate to the /cta-rider-fare directory
 4. install the required packages with this command:
 ```bash
 npm install
