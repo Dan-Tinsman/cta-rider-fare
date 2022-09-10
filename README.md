@@ -19,5 +19,14 @@ To run the program:
 node .
 ```
 
+## Testing
+
+Unit Tests were written using Jest
+To run the tests:
+```bash
+npm test
+```
+
 ## Packages Used
 readline-sync: https://github.com/anseki/readline-sync which was recommended from nodejs.dev to make reading input clean.
+jest: https://jestjs.io/docs/getting-started for unit tests

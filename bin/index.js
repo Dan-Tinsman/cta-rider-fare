@@ -1,4 +1,5 @@
 var readlineSync = require('readline-sync'); // package recommended from here: https://nodejs.dev/en/learn/accept-input-from-the-command-line-in-nodejs/
+const helpers = require('./helpers');
 
 /**
  *  Requirements: 
@@ -28,7 +29,7 @@ let gaavoStrArr = availableGaavo.split(',');
 // Convert the Gaavo string array to a Gaavo number array
 let gaavoSortedNumArr;
 try {
-    gaavoSortedNumArr = convertArrToSortedNumberArr(gaavoStrArr);
+    gaavoSortedNumArr = helpers.convertArrToSortedNumberArr(gaavoStrArr);
 } catch (error) {
     console.error(error);
     return;
@@ -37,7 +38,7 @@ try {
 console.log('Let me see if you have enough Gaavo to create ' + fareAmount + '...');
 let answer = findGaavoPieces(gaavoSortedNumArr, fareAmount);
 
-if (answer.length === 0){
+if (answer.length === 0) {
     console.log("You do not have the correct Gaavo pieces to pay this fare.")
 } else {
     console.log("You can use the following Gaavo Pieces to pay this fare: ", answer);
@@ -49,8 +50,8 @@ if (answer.length === 0){
 /* Functions        */
 /* ---------------- */
 function findGaavoPieces(gaavoPieces, fareAmount) {
-    let slicedArr = sliceArr(gaavoPieces, fareAmount);
-    
+    let slicedArr = helpers.sliceArr(gaavoPieces, fareAmount);
+
     let answer = [];
 
     // check to see if we can find the exact Gaavo piece for the fare
@@ -60,40 +61,4 @@ function findGaavoPieces(gaavoPieces, fareAmount) {
     }
 
     return answer;
-}
-
-/* ---------------- */
-/* Helper Functions */
-/* ---------------- */
-
-/* Slice Array if any element in gaavoPieces > fareAmount */
-function sliceArr(gaavoPieces, fareAmount) {
-    const spliceCondition = (fare) => fare > fareAmount;
-    let sliceIndex = gaavoPieces.findIndex(spliceCondition);
-    return gaavoPieces.slice(0, sliceIndex);
-}
-
-/* Convert array of strings to a array of sorted numbers */
-function convertArrToSortedNumberArr(stringArr) {
-    var numberArr = [];
-    length = stringArr.length;
- 
-    for (var i = 0; i < length; i++) {
-
-        // Check if string is not a number
-        if (isNaN(stringArr[i])){
-            throw 'Please only enter numbers!';
-        }
-
-        let number = Number(stringArr[i]);
-
-        // Check if string is negagive or 0
-        if (Math.sign(number) === -1 || Math.sign(number) === 0){
-            throw 'Please only enter positive numbers!';
-        }
-
-        numberArr.push(number);
-    }
-    let sortedArr = numberArr.sort();
-    return sortedArr;
 }
