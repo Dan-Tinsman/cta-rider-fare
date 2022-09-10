@@ -11,7 +11,7 @@ describe("CTA Fare Logic Tests", () => {
 
     test("Fare does not exist", () => {
         // arrange and act
-        var result = fare.findPieces([1, 2, 3, 4, 5], 6)
+        var result = fare.findPieces([1, 2, 3, 4, 5], 99)
 
         // assert
         expect(result).toStrictEqual([]);
@@ -22,7 +22,7 @@ describe("CTA Fare Logic Tests", () => {
         var result = fare.findPieces([1, 2, 3, 4, 5], 7)
 
         // add the result
-        let sum;
+        let sum = 0;
         result.forEach(piece => {
             sum += piece;
         });
@@ -36,7 +36,7 @@ describe("CTA Fare Logic Tests", () => {
         var result = fare.findPieces([1, 2, 3, 4, 5], 12)
 
         // add the result
-        let sum;
+        let sum = 0;
         result.forEach(piece => {
             sum += piece;
         });
@@ -50,7 +50,7 @@ describe("CTA Fare Logic Tests", () => {
         var result = fare.findPieces([1.5, 2.33, 3, 4, 5], 3.83)
 
         // add the result
-        let sum;
+        let sum = 0;
         result.forEach(piece => {
             sum += piece;
         });
@@ -61,9 +61,45 @@ describe("CTA Fare Logic Tests", () => {
 
     test("Fare does exist with multiple pieces matching fare", () => {
         // arrange and act
-        var result = fare.findPieces([7,7,7,7,7], 7);
+        var result = fare.findPieces([7,7,7,7,7], 1);
         
         // assert
-        expect(result).toStrictEqual([7]);
+        expect(result).toStrictEqual([1]);
+    });
+
+    test("Fare does exist with distinct numbers", () => {
+        // arrange and act
+        var result = fare.findPieces([1,2,4], 7);
+        
+        // assert
+        expect(result).toStrictEqual([1,2,4]);
+    });
+
+    test("Fare does exist with duplicate numbers", () => {
+        // arrange and act
+        var result = fare.findPieces([1,1,2,3,8,9], 7);
+
+        // add the result
+        let sum = 0;
+        result.forEach(piece => {
+            sum += piece;
+        });
+        
+        // assert
+        expect(sum).toBe(7);
+    });
+
+    test("Fare does exist with 3 same numbers", () => {
+        // arrange and act
+        var result = fare.findPieces([1,1,1,3,8,9], 6);
+
+        // add the result
+        let sum = 0;
+        result.forEach(piece => {
+            sum += piece;
+        });
+        
+        // assert
+        expect(sum).toBe(6);
     });
 })

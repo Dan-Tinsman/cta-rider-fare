@@ -10,22 +10,28 @@ const fare = {
         }
 
         let temp = [];
-        let copy = gaavoPieces;
-        let tempFare = fareAmount;
-        
-        gaavoPieces.forEach(piece => {
-            if (tempFare < 0) {
+
+        // if not, we'll have to search for a combination that matches
+        function search(index, gaavoPieces, fareAmount, tempArr) {
+
+            // if our search finds a a result where fareAmount - gaavoPieces[i] is 0, we have an answer.
+            if (fareAmount === 0) {
+                answer = tempArr.slice();
                 return answer;
             }
-            temp.push(piece);
-            if ((fareAmount - piece) === 0) {
-                answer.push(piece);
-                return answer;
-            } else {
-                this.findPieces(copy, tempFare);
+
+            // iterate the rest of the Gaavo pieces past our index
+            // to see if subtracting from fareAmount will reach 0
+            for (let i = index; i < gaavoPieces.length; i++) {
+                tempArr.push(gaavoPieces[i]);
+                search(i + 1, gaavoPieces, fareAmount - gaavoPieces[i], tempArr);
+                tempArr.pop();
             }
-        });
-        
+        }
+
+        // start the search at the first Gaavo piece
+        search(0, gaavoPieces, fareAmount, temp);
+        return answer;
     }
 }
 module.exports = fare
