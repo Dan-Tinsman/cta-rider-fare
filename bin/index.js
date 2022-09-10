@@ -9,10 +9,8 @@ var readlineSync = require('readline-sync'); // package recommended from here: h
  *     Tell the rider there is no possible combination that will work
  **/
 
-/**
- *  Notes: 
- *  - No assumptions about what currency denominations exist
- **/
+// TODO:
+// - check for negative numbers on fareAmount input
 
 
 // Ask for the fare
@@ -36,20 +34,44 @@ try {
     return;
 }
 
-console.log('Let me see if you have enough Gaavo to create ' + fareAmount + '!');
-console.log(gaavoSortedNumArr);
+console.log('Let me see if you have enough Gaavo to create ' + fareAmount + '...');
+let answer = findGaavoPieces(gaavoSortedNumArr, fareAmount);
+
+if (answer.length === 0){
+    console.log("You do not have the correct Gaavo pieces to pay this fare.")
+} else {
+    console.log("You can use the following Gaavo Pieces to pay this fare: ", answer);
+}
+
 
 
 /* ---------------- */
 /* Functions        */
 /* ---------------- */
-function findGaavoPieces() {
-    // todo
+function findGaavoPieces(gaavoPieces, fareAmount) {
+    let slicedArr = sliceArr(gaavoPieces, fareAmount);
+    
+    let answer = [];
+
+    // check to see if we can find the exact Gaavo piece for the fare
+    let onePieceAnswer = slicedArr.find(piece => piece === fareAmount);
+    if (onePieceAnswer !== undefined) {
+        answer.push(onePieceAnswer);
+    }
+
+    return answer;
 }
 
 /* ---------------- */
 /* Helper Functions */
 /* ---------------- */
+
+/* Slice Array if any element in gaavoPieces > fareAmount */
+function sliceArr(gaavoPieces, fareAmount) {
+    const spliceCondition = (fare) => fare > fareAmount;
+    let sliceIndex = gaavoPieces.findIndex(spliceCondition);
+    return gaavoPieces.slice(0, sliceIndex);
+}
 
 /* Convert array of strings to a array of sorted numbers */
 function convertArrToSortedNumberArr(stringArr) {
