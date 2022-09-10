@@ -18,3 +18,6 @@ To run the program:
 ```bash
 node .
 ```
+
+## Packages Used
+readline-sync: https://github.com/anseki/readline-sync which was recommended from nodejs.dev to make reading input clean.
