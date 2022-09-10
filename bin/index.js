@@ -13,6 +13,7 @@ const fare = require('./fare');
 
 // TODO:
 // - check for negative numbers on fareAmount input
+// - figure out why 1,1,1,1,1 does not work with 5 fareAmount
 
 
 // Ask for the fare
