@@ -1,5 +1,6 @@
 var readlineSync = require('readline-sync'); // package recommended from here: https://nodejs.dev/en/learn/accept-input-from-the-command-line-in-nodejs/
 const helpers = require('./helpers');
+const fare = require('./fare');
 
 /**
  *  Requirements: 
@@ -27,16 +28,17 @@ let availableGaavo = readlineSync.question('Gaavo Pieces ($G): ');
 let gaavoStrArr = availableGaavo.split(',');
 
 // Convert the Gaavo string array to a Gaavo number array
-let gaavoSortedNumArr;
+let gaavoSortedSlicedNumArr;
 try {
-    gaavoSortedNumArr = helpers.convertArrToSortedNumberArr(gaavoStrArr);
+    let gaavoSortedNumArr = helpers.convertArrToSortedNumberArr(gaavoStrArr);
+    gaavoSortedSlicedNumArr = helpers.sliceArr(gaavoSortedNumArr, fareAmount);
 } catch (error) {
     console.error(error);
     return;
 }
 
 console.log('Let me see if you have enough Gaavo to create ' + fareAmount + '...');
-let answer = findGaavoPieces(gaavoSortedNumArr, fareAmount);
+let answer = fare.findPieces(gaavoSortedSlicedNumArr, fareAmount);
 
 if (answer.length === 0) {
     console.log("You do not have the correct Gaavo pieces to pay this fare.")
@@ -49,16 +51,3 @@ if (answer.length === 0) {
 /* ---------------- */
 /* Functions        */
 /* ---------------- */
-function findGaavoPieces(gaavoPieces, fareAmount) {
-    let slicedArr = helpers.sliceArr(gaavoPieces, fareAmount);
-
-    let answer = [];
-
-    // check to see if we can find the exact Gaavo piece for the fare
-    let onePieceAnswer = slicedArr.find(piece => piece === fareAmount);
-    if (onePieceAnswer !== undefined) {
-        answer.push(onePieceAnswer);
-    }
-
-    return answer;
-}
